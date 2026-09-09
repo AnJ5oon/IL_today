@@ -192,10 +192,28 @@
 
   .process{
     font-size:14px;
-    line-height:1.55;
+    line-height:1.5;
     color:var(--ink);
     font-weight:500;
     margin:0;
+    padding:0;
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+  }
+  .process li{
+    padding-left:14px;
+    position:relative;
+  }
+  .process li::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0.6em;
+    width:6px;
+    height:2px;
+    background:var(--accent);
   }
 
   .teams{
@@ -314,7 +332,11 @@
           <div><div class="n">5</div><div class="lab">직원</div></div>
         </div>
       </div>
-      <p class="process">형틀 뒷채움·비계 가설계단 설치작업</p>
+      <ul class="process">
+        <li>A존 B1F 리브라스 뒷채움</li>
+        <li>1F 돌출철근 보양작업</li>
+        <li>가설계단 설치 마감</li>
+      </ul>
       <div class="teams">
         <span class="team">형틀<b>4</b></span>
         <span class="team">용역<b>2</b></span>
@@ -331,7 +353,11 @@
           <div><div class="n">6</div><div class="lab">직원</div></div>
         </div>
       </div>
-      <p class="process">철근배근·형틀 골조공사 집중, 해체정리 병행 (신규 8명)</p>
+      <ul class="process">
+        <li>105동 지붕층 철근배근</li>
+        <li>107동 B1F 형틀 마감</li>
+        <li>108동 B2F 거푸집 해체</li>
+      </ul>
       <div class="teams">
         <span class="team">형틀<b>77</b></span>
         <span class="team">철근<b>59</b></span>
@@ -341,14 +367,14 @@
         <span class="team">해체<b>18</b></span>
         <span class="team hide" hidden>알폼<b>12</b></span>
         <span class="team hide" hidden>할석미장<b>8</b></span>
-        <span class="team hide" hidden>직영목수<b>3</b></span>
         <span class="team hide" hidden>공사<b>3</b></span>
+        <span class="team hide" hidden>직영목수<b>3</b></span>
         <span class="team hide" hidden>데크<b>3</b></span>
         <span class="team hide" hidden>직영반장<b>2</b></span>
         <span class="team hide" hidden>안전전담및시설<b>2</b></span>
         <span class="team hide" hidden>타설<b>2</b></span>
-        <span class="team hide" hidden>단열보수<b>2</b></span>
         <span class="team hide" hidden>견출<b>2</b></span>
+        <span class="team hide" hidden>단열보수<b>2</b></span>
         <span class="team hide" hidden>직원<b>6</b></span>
         <span class="team hide" hidden>직영<b>6</b></span>
         <button class="team-toggle" data-more="12" onclick="toggleTeams(this)">+12개 더보기</button>
@@ -363,7 +389,11 @@
           <div><div class="n">7</div><div class="lab">직원</div></div>
         </div>
       </div>
-      <p class="process">형틀·철근 골조공사 및 콘크리트 타설·외부견출 마감 병행</p>
+      <ul class="process">
+        <li>203동 옥탑 슬라브 철근배근</li>
+        <li>203동 옥탑1층 호퍼타설</li>
+        <li>203동 파라펫 형틀작업</li>
+      </ul>
       <div class="teams">
         <span class="team">형틀<b>13</b></span>
         <span class="team">용역<b>12</b></span>
@@ -390,18 +420,23 @@
           <div><div class="n">5</div><div class="lab">직원</div></div>
         </div>
       </div>
-      <p class="process">형틀·철근 골조공사와 할석미장·견출 마감작업 병행</p>
+      <ul class="process">
+        <li>어린이집 TG보 거푸집 설치</li>
+        <li>어린이집 바닥벽체 철근배근</li>
+        <li>201동 외부계단 거푸집</li>
+      </ul>
       <div class="teams">
-        <span class="team">견출<b>18</b></span>
         <span class="team">형틀<b>16</b></span>
         <span class="team">할석미장<b>12</b></span>
+        <span class="team">견출외부로프<b>12</b></span>
         <span class="team">용역<b>10</b></span>
         <span class="team">철근<b>8</b></span>
         <span class="team">정리<b>8</b></span>
+        <span class="team hide" hidden>견출<b>6</b></span>
         <span class="team hide" hidden>해체<b>2</b></span>
         <span class="team hide" hidden>직원<b>5</b></span>
         <span class="team hide" hidden>직영<b>5</b></span>
-        <button class="team-toggle" data-more="3" onclick="toggleTeams(this)">+3개 더보기</button>
+        <button class="team-toggle" data-more="4" onclick="toggleTeams(this)">+4개 더보기</button>
       </div>
     </div>
 
@@ -413,22 +448,25 @@
           <div><div class="n">7</div><div class="lab">직원</div></div>
         </div>
       </div>
-      <p class="process">알폼·철근 골조공사 및 시스템동바리 해체정리 병행</p>
+      <ul class="process">
+        <li>110동 5층 알폼설치</li>
+        <li>105동 7층 슬라브 철근배근</li>
+        <li>106동 6층 갱폼인상</li>
+      </ul>
       <div class="teams">
         <span class="team">알폼<b>36</b></span>
         <span class="team">철근<b>34</b></span>
         <span class="team">용역<b>20</b></span>
         <span class="team">시스템<b>10</b></span>
-        <span class="team">정리<b>6</b></span>
+        <span class="team">해체정리<b>7</b></span>
         <span class="team">할석미장<b>6</b></span>
         <span class="team hide" hidden>갱폼<b>5</b></span>
         <span class="team hide" hidden>형틀<b>4</b></span>
         <span class="team hide" hidden>세대청소<b>4</b></span>
         <span class="team hide" hidden>견출<b>4</b></span>
-        <span class="team hide" hidden>해체<b>1</b></span>
         <span class="team hide" hidden>직원<b>7</b></span>
         <span class="team hide" hidden>직영<b>9</b></span>
-        <button class="team-toggle" data-more="7" onclick="toggleTeams(this)">+7개 더보기</button>
+        <button class="team-toggle" data-more="6" onclick="toggleTeams(this)">+6개 더보기</button>
       </div>
     </div>
 
@@ -440,7 +478,10 @@
           <div><div class="n">1</div><div class="lab">직원</div></div>
         </div>
       </div>
-      <p class="process">할석미장·견출 세대 마감작업</p>
+      <ul class="process">
+        <li>111동 계단실 단차미장</li>
+        <li>102동 오픈발코니 견출</li>
+      </ul>
       <div class="teams">
         <span class="team">할석미장<b>7</b></span>
         <span class="team">견출<b>4</b></span>
@@ -457,7 +498,11 @@
           <div><div class="n">6</div><div class="lab">직원</div></div>
         </div>
       </div>
-      <p class="process">관리업무 위주, 현장 작업인원 없음</p>
+      <ul class="process">
+        <li>현장 총괄 관리</li>
+        <li>시공계획서 및 기성관리</li>
+        <li>안전관리 현장점검</li>
+      </ul>
       <div class="teams">
         <span class="team">직원<b>6</b></span>
       </div>
@@ -471,7 +516,11 @@
           <div><div class="n">2</div><div class="lab">직원</div></div>
         </div>
       </div>
-      <p class="process">할석미장·견출 세대 마감작업</p>
+      <ul class="process">
+        <li>202동 세대 마감 할석미장</li>
+        <li>202동 외부로프 견출</li>
+        <li>207동 계단 손보기</li>
+      </ul>
       <div class="teams">
         <span class="team">할석미장<b>6</b></span>
         <span class="team">견출<b>6</b></span>
@@ -488,7 +537,11 @@
           <div><div class="n">6</div><div class="lab">직원</div></div>
         </div>
       </div>
-      <p class="process">타워크레인 기초 철근·거푸집·콘크리트 타설 — 착공 초기 단계</p>
+      <ul class="process">
+        <li>타워4호기 기초 콘크리트 타설</li>
+        <li>타워4호기 기초 거푸집 마감</li>
+        <li>108동 버림타설 준비</li>
+      </ul>
       <div class="teams">
         <span class="team">형틀<b>7</b></span>
         <span class="team">콘크리트<b>5</b></span>
@@ -496,7 +549,8 @@
         <span class="team">철근<b>2</b></span>
         <span class="team">기계미장<b>1</b></span>
         <span class="team">직원<b>6</b></span>
-        <span class="team">직영<b>1</b></span>
+        <span class="team hide" hidden>직영<b>1</b></span>
+        <button class="team-toggle" data-more="1" onclick="toggleTeams(this)">+1개 더보기</button>
       </div>
     </div>
 
@@ -508,7 +562,11 @@
           <div><div class="n">5</div><div class="lab">직원</div></div>
         </div>
       </div>
-      <p class="process">형틀·철근 골조공사와 시스템동바리 설치 병행</p>
+      <ul class="process">
+        <li>104동 4-1구간 DH보 설치</li>
+        <li>101동 합벽갱폼 조립</li>
+        <li>101동 기둥옹벽 철근조립</li>
+      </ul>
       <div class="teams">
         <span class="team">형틀<b>45</b></span>
         <span class="team">철근<b>22</b></span>
@@ -531,7 +589,10 @@
           <div><div class="n">3</div><div class="lab">직원</div></div>
         </div>
       </div>
-      <p class="process">용역인력 자재정리 위주 소규모 운영</p>
+      <ul class="process">
+        <li>도면검토 및 현장관리</li>
+        <li>현장 자재정리 및 이동</li>
+      </ul>
       <div class="teams">
         <span class="team">용역<b>1</b></span>
         <span class="team">직원<b>3</b></span>
@@ -546,7 +607,11 @@
           <div><div class="n">14</div><div class="lab">직원</div></div>
         </div>
       </div>
-      <p class="process">철근배근·형틀 골조공사 집중</p>
+      <ul class="process">
+        <li>3단지 근생벽체 철근배근</li>
+        <li>101동 B7F DH보 설치</li>
+        <li>104동 지하6층 보슬라브</li>
+      </ul>
       <div class="teams">
         <span class="team">형틀<b>52</b></span>
         <span class="team">철근<b>35</b></span>
@@ -554,8 +619,9 @@
         <span class="team">시스템<b>6</b></span>
         <span class="team">해체정리<b>5</b></span>
         <span class="team">CPB<b>3</b></span>
-        <span class="team">직원<b>14</b></span>
-        <span class="team">직영<b>8</b></span>
+        <span class="team hide" hidden>직원<b>14</b></span>
+        <span class="team hide" hidden>직영<b>8</b></span>
+        <button class="team-toggle" data-more="2" onclick="toggleTeams(this)">+2개 더보기</button>
       </div>
     </div>
 
@@ -567,7 +633,11 @@
           <div><div class="n">10</div><div class="lab">직원</div></div>
         </div>
       </div>
-      <p class="process">알폼·형틀 골조공사 및 할석미장·견출 마감작업 병행</p>
+      <ul class="process">
+        <li>106동 30F 알폼설치</li>
+        <li>어린이집 1F 벽체 거푸집</li>
+        <li>109동 지붕층 슬라브 철근배근</li>
+      </ul>
       <div class="teams">
         <span class="team">형틀<b>16</b></span>
         <span class="team">알폼<b>11</b></span>
@@ -590,7 +660,7 @@
 
   <footer>
     <span>ERP(ilenc.dcerp.kr) 일일출역 게시글 자동 수집 · Claude 요약</span>
-    <span>수집시각 2026-09-09 09:51 · 원문은 각 현장 ERP 게시글 참고</span>
+    <span>수집시각 2026-09-09 10:09 · 원문은 각 현장 ERP 게시글 참고</span>
   </footer>
 
 </div>
