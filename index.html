@@ -345,6 +345,10 @@
 
 
 <div class="brandbar"></div>
+    <div class="archive-nav">
+      <span class="label">지난 기록</span>
+        <a class="current" href="archive/2026-09-10.html">2026-09-10</a>
+    </div>
 <div class="wrap">
 
   <div class="head">
@@ -386,7 +390,8 @@
         <span class="team">형틀<b>4</b></span>
         <span class="team">용역<b>2</b></span>
         <span class="team">철근<b>1</b></span>
-        <span class="team">직원<b>5</b></span>
+        <span class="team hide" hidden>직원<b>5</b></span>
+        <button class="team-toggle" data-more="1" onclick="toggleTeams(this)">+1개 더보기</button>
       </div>
     </div>
 
@@ -541,7 +546,8 @@
         <span class="team">할석미장<b>7</b></span>
         <span class="team">견출<b>4</b></span>
         <span class="team">보통인부<b>2</b></span>
-        <span class="team">직원<b>1</b></span>
+        <span class="team hide" hidden>직원<b>1</b></span>
+        <button class="team-toggle" data-more="1" onclick="toggleTeams(this)">+1개 더보기</button>
       </div>
     </div>
 
@@ -559,7 +565,8 @@
       </ul>
       <div class="teams">
         <span class="team">용역<b>2</b></span>
-        <span class="team">직원<b>6</b></span>
+        <span class="team hide" hidden>직원<b>6</b></span>
+        <button class="team-toggle" data-more="1" onclick="toggleTeams(this)">+1개 더보기</button>
       </div>
     </div>
 
@@ -582,7 +589,8 @@
         <span class="team">할석미장<b>6</b></span>
         <span class="team">타설<b>2</b></span>
         <span class="team">용역<b>1</b></span>
-        <span class="team">직원<b>2</b></span>
+        <span class="team hide" hidden>직원<b>2</b></span>
+        <button class="team-toggle" data-more="1" onclick="toggleTeams(this)">+1개 더보기</button>
       </div>
     </div>
 
@@ -602,8 +610,9 @@
       <div class="teams">
         <span class="team">용역<b>4</b></span>
         <span class="team">철근<b>1</b></span>
-        <span class="team">직원<b>6</b></span>
-        <span class="team">직영<b>1</b></span>
+        <span class="team hide" hidden>직원<b>6</b></span>
+        <span class="team hide" hidden>직영<b>1</b></span>
+        <button class="team-toggle" data-more="2" onclick="toggleTeams(this)">+2개 더보기</button>
       </div>
     </div>
 
@@ -648,7 +657,8 @@
       </ul>
       <div class="teams">
         <span class="team">용역<b>1</b></span>
-        <span class="team">직원<b>3</b></span>
+        <span class="team hide" hidden>직원<b>3</b></span>
+        <button class="team-toggle" data-more="1" onclick="toggleTeams(this)">+1개 더보기</button>
       </div>
     </div>
 
@@ -712,11 +722,11 @@
       </div>
     </div>
 
-  </div>
+  </div></div>
 
   <footer>
     <span>ERP(ilenc.dcerp.kr) 일일출역 게시글 자동 수집 · Claude 요약</span>
-    <span>수집시각 2026-09-10 09:05 · 원문은 각 현장 ERP 게시글 참고</span>
+    <span>수집시각 2026-09-10 11:09 · 원문은 각 현장 ERP 게시글 참고</span>
   </footer>
 
 </div>
