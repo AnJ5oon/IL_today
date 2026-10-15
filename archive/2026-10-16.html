@@ -1,0 +1,751 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IL 현장 일보 요약</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+  :root{
+    --bg:#0a0a0c;
+    --surface:#141417;
+    --surface-2:#1b1b1f;
+    --ink:#f2efe8;
+    --ink-soft:#a39d92;
+    --ink-faint:#6b665e;
+    --line:#28272a;
+    --line-strong:#3a3733;
+    --accent:#e0a53f;
+    --accent-ink:#f3c26b;
+    --accent-soft:#2a2013;
+    --brand-blue:#5fb3c7;
+    --brand-blue-soft:#12252a;
+    --lime:#9dc22e;
+    --warn:#e2604a;
+    --warn-soft:#2c1815;
+    --warn-ink:#f0a493;
+    --good:#5cb586;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 500px at 15% -10%, rgba(224,165,63,.07), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(95,179,199,.06), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans KR','IBM Plex Sans KR',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .brandbar{
+    height:2px;
+    background:linear-gradient(90deg,var(--brand-blue) 0 33%,var(--accent) 33% 66%,var(--lime) 66% 100%);
+    box-shadow:0 0 16px rgba(224,165,63,.35);
+  }
+  .archive-nav{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 28px;
+    overflow-x:auto;
+    border-bottom:1px solid var(--line);
+    background:#0d0d10;
+  }
+  .archive-nav .label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.06em;
+    color:var(--ink-faint);
+    flex-shrink:0;
+    margin-right:4px;
+  }
+  .archive-nav a{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    padding:4px 10px;
+    border-radius:20px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    text-decoration:none;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .archive-nav a:hover{
+    color:var(--accent-ink);
+    border-color:var(--accent);
+  }
+  .archive-nav a.current{
+    background:var(--accent-soft);
+    border-color:var(--accent);
+    color:var(--accent-ink);
+  }
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:44px 28px 80px;
+  }
+
+  /* header */
+  .head{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:24px;
+    padding-bottom:30px;
+    margin-bottom:30px;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .head::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:-1px;
+    width:120px; height:1px;
+    background:linear-gradient(90deg,var(--accent),transparent);
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:12px;
+  }
+  .logo{
+    height:34px;
+    width:auto;
+    display:block;
+    filter:drop-shadow(0 0 10px rgba(224,165,63,.25));
+  }
+  .head-left .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent-ink);
+    font-weight:600;
+    margin:0;
+  }
+  .head-left h1{
+    font-family:'Noto Serif KR',serif;
+    font-weight:700;
+    font-size:clamp(28px,3.6vw,38px);
+    line-height:1.2;
+    margin:0;
+    text-wrap:balance;
+    color:var(--ink);
+    letter-spacing:-.01em;
+  }
+  .head-left .sub{
+    margin:10px 0 0;
+    color:var(--ink-soft);
+    font-size:14.5px;
+  }
+  .head-stats{
+    display:flex;
+    gap:36px;
+  }
+  .stat{
+    text-align:right;
+  }
+  .stat .n{
+    font-family:'IBM Plex Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    font-weight:600;
+    font-size:32px;
+    color:var(--accent-ink);
+    line-height:1;
+    text-shadow:0 0 22px rgba(224,165,63,.28);
+  }
+  .stat:nth-child(2) .n{
+    color:var(--brand-blue);
+    text-shadow:0 0 22px rgba(95,179,199,.28);
+  }
+  .stat .l{
+    margin-top:8px;
+    font-size:11.5px;
+    color:var(--ink-faint);
+    letter-spacing:.04em;
+  }
+
+  /* grid */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+    gap:16px;
+  }
+
+  .card{
+    background:linear-gradient(180deg,var(--surface),var(--surface) 60%,#121215);
+    border:1px solid var(--line);
+    border-top:1px solid var(--line-strong);
+    border-left:3px solid var(--accent);
+    border-radius:10px;
+    padding:20px 22px 20px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    position:relative;
+    box-shadow:0 1px 0 rgba(255,255,255,.02) inset, 0 12px 24px -16px rgba(0,0,0,.6);
+  }
+  .card:nth-child(3n+2){border-left-color:var(--brand-blue);}
+  .card:nth-child(3n){border-left-color:var(--lime);}
+  .card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+  }
+  .card-top h2{
+    font-family:'IBM Plex Sans KR',sans-serif;
+    font-size:17px;
+    font-weight:600;
+    margin:0;
+    line-height:1.3;
+    color:var(--ink);
+  }
+  .code{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-faint);
+    margin-top:3px;
+    display:block;
+  }
+  .counts{
+    display:flex;
+    gap:18px;
+    flex-shrink:0;
+  }
+  .counts div{text-align:right;}
+  .counts .n{
+    font-family:'IBM Plex Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    font-weight:600;
+    font-size:19px;
+    color:var(--brand-blue);
+  }
+  .counts .lab{
+    font-size:10.5px;
+    color:var(--ink-faint);
+    margin-top:2px;
+  }
+  .counts .total .n{color:var(--accent-ink);}
+
+  .process{
+    font-size:14px;
+    line-height:1.5;
+    color:var(--ink);
+    font-weight:500;
+    margin:0;
+    padding:0;
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+  }
+  .process li{
+    padding-left:14px;
+    position:relative;
+  }
+  .process li::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0.6em;
+    width:6px;
+    height:2px;
+    background:var(--accent);
+  }
+  .process li.pour{
+    color:var(--warn);
+    font-weight:700;
+  }
+  .process li.pour::before{
+    background:var(--warn);
+  }
+
+  .teams{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    padding-top:12px;
+    border-top:1px solid var(--line);
+  }
+  .team{
+    font-size:12px;
+    padding:4px 9px;
+    border-radius:6px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .team b{
+    font-family:'IBM Plex Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--accent-ink);
+    font-weight:600;
+    margin-left:3px;
+  }
+  .team.more{
+    color:var(--ink-faint);
+    background:transparent;
+    border-style:dashed;
+  }
+  .team-toggle{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    padding:4px 9px;
+    border-radius:6px;
+    background:transparent;
+    border:1px dashed var(--line-strong);
+    color:var(--ink-faint);
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .team-toggle:hover{
+    color:var(--accent-ink);
+    border-color:var(--accent);
+  }
+  .team-toggle:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+
+  /* missing card */
+  .card.missing{
+    background:var(--surface-2);
+    border:1px dashed var(--warn);
+  }
+  .card.missing h2{color:var(--warn-ink);}
+  .card.missing .msg{
+    font-size:13.5px;
+    color:var(--warn-ink);
+    line-height:1.6;
+  }
+  .card.missing .badge.warn{
+    background:var(--warn-soft);
+    color:var(--warn-ink);
+  }
+
+  footer{
+    margin-top:40px;
+    padding-top:22px;
+    border-top:1px solid var(--line);
+    font-size:12px;
+    color:var(--ink-faint);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  @media (max-width:560px){
+    .head{flex-direction:column;align-items:flex-start;}
+    .head-stats{gap:24px;}
+  }
+</style>
+</head>
+<body>
+
+
+<div class="brandbar"></div>
+    <div class="archive-nav">
+      <span class="label">지난 기록</span>
+        <a class="current" href="archive/2026-10-16.html">2026-10-16</a>
+        <a href="archive/2026-10-15.html">2026-10-15</a>
+        <a href="archive/2026-10-14.html">2026-10-14</a>
+        <a href="archive/2026-10-13.html">2026-10-13</a>
+        <a href="archive/2026-10-12.html">2026-10-12</a>
+        <a href="archive/2026-10-11.html">2026-10-11</a>
+        <a href="archive/2026-10-10.html">2026-10-10</a>
+        <a href="archive/2026-10-09.html">2026-10-09</a>
+        <a href="archive/2026-10-08.html">2026-10-08</a>
+        <a href="archive/2026-10-07.html">2026-10-07</a>
+        <a href="archive/2026-10-06.html">2026-10-06</a>
+        <a href="archive/2026-10-05.html">2026-10-05</a>
+        <a href="archive/2026-10-02.html">2026-10-02</a>
+        <a href="archive/2026-10-01.html">2026-10-01</a>
+        <a href="archive/2026-09-30.html">2026-09-30</a>
+        <a href="archive/2026-09-29.html">2026-09-29</a>
+        <a href="archive/2026-09-28.html">2026-09-28</a>
+        <a href="archive/2026-09-23.html">2026-09-23</a>
+        <a href="archive/2026-09-22.html">2026-09-22</a>
+        <a href="archive/2026-09-21.html">2026-09-21</a>
+        <a href="archive/2026-09-19.html">2026-09-19</a>
+        <a href="archive/2026-09-18.html">2026-09-18</a>
+        <a href="archive/2026-09-17.html">2026-09-17</a>
+        <a href="archive/2026-09-16.html">2026-09-16</a>
+        <a href="archive/2026-09-15.html">2026-09-15</a>
+        <a href="archive/2026-09-14.html">2026-09-14</a>
+        <a href="archive/2026-09-12.html">2026-09-12</a>
+        <a href="archive/2026-09-11.html">2026-09-11</a>
+        <a href="archive/2026-09-10.html">2026-09-10</a>
+    </div>
+<div class="wrap">
+
+  <div class="head">
+    <div class="head-left">
+      <div class="brand">
+        <img class="logo" src="/IL_today/assets/logo.png" alt="IL E&C" />
+        <p class="eyebrow">IL E&amp;C · 전현장 일일출역 요약</p>
+      </div>
+      <h1>2026년 10월 16일 (금) 현장 요약</h1>
+      <p class="sub">ERP 일일출역 게시글 13건을 요약</p>
+    </div>
+    <div class="head-stats">
+      <div class="stat">
+        <div class="n">1119</div>
+        <div class="l">전체 출역 인원(명)</div>
+      </div>
+      <div class="stat">
+        <div class="n">13</div>
+        <div class="l">일보 작성 현장</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top">
+        <div><h2>공덕역 자이르네<span class="code">S1017</span></h2></div>
+        <div class="counts">
+          <div class="total"><div class="n">7</div><div class="lab">총원</div></div>
+          <div><div class="n">5</div><div class="lab">직원</div></div>
+        </div>
+      </div>
+      <ul class="process">
+        <li class="pour">B1F 기둥 타설구 설치</li>
+        <li>B1F 야적장 자재 정리</li>
+      </ul>
+      <div class="teams">
+        <span class="team">철근<b>1</b></span>
+        <span class="team">직원<b>5</b></span>
+        <span class="team">직영<b>1</b></span>
+      </div></div>
+
+    <div class="card">
+      <div class="card-top">
+        <div><h2>김포풍무<span class="code">S1009</span></h2></div>
+        <div class="counts">
+          <div class="total"><div class="n">288</div><div class="lab">총원</div></div>
+          <div><div class="n">6</div><div class="lab">직원</div></div>
+        </div>
+      </div>
+      <ul class="process">
+        <li>101~104동 주차장 지붕 철근배근</li>
+        <li>104·105·106동 B1F 거푸집 해체</li>
+        <li>108·109동 B1F 거푸집 설치</li>
+      </ul>
+      <div class="teams">
+        <span class="team">형틀<b>81</b></span>
+        <span class="team">철근<b>63</b></span>
+        <span class="team">정리<b>28</b></span>
+        <span class="team">용역<b>23</b></span>
+        <span class="team">해체<b>17</b></span>
+        <span class="team">타설<b>2</b></span>
+        <span class="team hide" hidden>시스템<b>16</b></span>
+        <span class="team hide" hidden>알폼<b>12</b></span>
+        <span class="team hide" hidden>할석미장<b>7</b></span>
+        <span class="team hide" hidden>세대청소<b>5</b></span>
+        <span class="team hide" hidden>갱폼<b>4</b></span>
+        <span class="team hide" hidden>데크<b>4</b></span>
+        <span class="team hide" hidden>공사<b>3</b></span>
+        <span class="team hide" hidden>안전시설<b>2</b></span>
+        <span class="team hide" hidden>견출<b>2</b></span>
+        <span class="team hide" hidden>단열보수<b>2</b></span>
+        <span class="team hide" hidden>직원<b>6</b></span>
+        <span class="team hide" hidden>직영<b>11</b></span>
+        <button class="team-toggle" data-more="12" onclick="toggleTeams(this)">+12개 더보기</button>
+      </div></div>
+
+    <div class="card">
+      <div class="card-top">
+        <div><h2>라프리체자이<span class="code">S1008</span></h2></div>
+        <div class="counts">
+          <div class="total"><div class="n">71</div><div class="lab">총원</div></div>
+          <div><div class="n">6</div><div class="lab">직원</div></div>
+        </div>
+      </div>
+      <ul class="process">
+        <li class="pour">209동 2코어 옥탑2층 타설</li>
+        <li>201·203·210동 옥탑2층 형틀작업</li>
+        <li>203·210동 옥탑지붕 철근배근</li>
+      </ul>
+      <div class="teams">
+        <span class="team">형틀<b>20</b></span>
+        <span class="team">용역<b>20</b></span>
+        <span class="team">할석<b>6</b></span>
+        <span class="team">견출<b>5</b></span>
+        <span class="team">철근<b>4</b></span>
+        <span class="team">콘크리트<b>3</b></span>
+        <span class="team hide" hidden>단열재<b>4</b></span>
+        <span class="team hide" hidden>알폼<b>1</b></span>
+        <span class="team hide" hidden>직원<b>6</b></span>
+        <span class="team hide" hidden>직영<b>2</b></span>
+        <button class="team-toggle" data-more="4" onclick="toggleTeams(this)">+4개 더보기</button>
+      </div></div>
+
+    <div class="card">
+      <div class="card-top">
+        <div><h2>무교다동4구역 PCS<span class="code">S1019</span></h2></div>
+        <div class="counts">
+          <div class="total"><div class="n">1</div><div class="lab">총원</div></div>
+          <div><div class="n">1</div><div class="lab">직원</div></div>
+        </div>
+      </div>
+      <ul class="process">
+        <li>단위 공정표 작성</li>
+        <li>타현장 견학자료 취합</li>
+      </ul>
+      <div class="teams">
+        <span class="team">직원<b>1</b></span>
+      </div></div>
+
+    <div class="card">
+      <div class="card-top">
+        <div><h2>삼선5구역<span class="code">S1003</span></h2></div>
+        <div class="counts">
+          <div class="total"><div class="n">69</div><div class="lab">총원</div></div>
+          <div><div class="n">5</div><div class="lab">직원</div></div>
+        </div>
+      </div>
+      <ul class="process">
+        <li class="pour">304·305동 발코니 타설</li>
+        <li>1택지 어린이집 2층 벽체 거푸집</li>
+        <li>201~203동 외부발코니 할석</li>
+      </ul>
+      <div class="teams">
+        <span class="team">형틀<b>16</b></span>
+        <span class="team">할석미장<b>12</b></span>
+        <span class="team">정리<b>9</b></span>
+        <span class="team">견출<b>8</b></span>
+        <span class="team">철근<b>7</b></span>
+        <span class="team">콘크리트<b>3</b></span>
+        <span class="team hide" hidden>용역<b>6</b></span>
+        <span class="team hide" hidden>해체<b>1</b></span>
+        <span class="team hide" hidden>직원<b>5</b></span>
+        <span class="team hide" hidden>직영<b>2</b></span>
+        <button class="team-toggle" data-more="4" onclick="toggleTeams(this)">+4개 더보기</button>
+      </div></div>
+
+    <div class="card">
+      <div class="card-top">
+        <div><h2>상인자이<span class="code">S1012</span></h2></div>
+        <div class="counts">
+          <div class="total"><div class="n">145</div><div class="lab">총원</div></div>
+          <div><div class="n">8</div><div class="lab">직원</div></div>
+        </div>
+      </div>
+      <ul class="process">
+        <li class="pour">111동 10층 슬라브 타설</li>
+        <li>109동 8층 알폼설치·철근배근</li>
+        <li>106동 10층 갱폼인상</li>
+      </ul>
+      <div class="teams">
+        <span class="team">알폼<b>35</b></span>
+        <span class="team">철근<b>28</b></span>
+        <span class="team">용역<b>20</b></span>
+        <span class="team">시스템<b>8</b></span>
+        <span class="team">견출<b>7</b></span>
+        <span class="team">타설<b>7</b></span>
+        <span class="team hide" hidden>할석미장<b>6</b></span>
+        <span class="team hide" hidden>갱폼<b>5</b></span>
+        <span class="team hide" hidden>해체정리<b>4</b></span>
+        <span class="team hide" hidden>형틀<b>3</b></span>
+        <span class="team hide" hidden>세대청소<b>3</b></span>
+        <span class="team hide" hidden>기계미장<b>3</b></span>
+        <span class="team hide" hidden>직원<b>8</b></span>
+        <span class="team hide" hidden>직영<b>8</b></span>
+        <button class="team-toggle" data-more="8" onclick="toggleTeams(this)">+8개 더보기</button>
+      </div></div>
+
+    <div class="card">
+      <div class="card-top">
+        <div><h2>성동자이<span class="code">S1004</span></h2></div>
+        <div class="counts">
+          <div class="total"><div class="n">6</div><div class="lab">총원</div></div>
+          <div><div class="n">1</div><div class="lab">직원</div></div>
+        </div>
+      </div>
+      <ul class="process">
+        <li>102·111동 옥상 장비패드 미장</li>
+        <li>101동 1층 E/V실 면귀미장</li>
+        <li>B1F 주차장 견출손보기</li>
+      </ul>
+      <div class="teams">
+        <span class="team">할석미장<b>5</b></span>
+        <span class="team">직원<b>1</b></span>
+      </div></div>
+
+    <div class="card">
+      <div class="card-top">
+        <div><h2>수표구역 오피스빌딩<span class="code">S1016</span></h2></div>
+        <div class="counts">
+          <div class="total"><div class="n">61</div><div class="lab">총원</div></div>
+          <div><div class="n">6</div><div class="lab">직원</div></div>
+        </div>
+      </div>
+      <ul class="process">
+        <li class="pour">2-2구간 합벽 타설</li>
+        <li>3-1~3-2구간 슬라브 철근배근</li>
+        <li>7구간 벽체 거푸집·해체</li>
+      </ul>
+      <div class="teams">
+        <span class="team">철근<b>19</b></span>
+        <span class="team">형틀<b>16</b></span>
+        <span class="team">용역<b>9</b></span>
+        <span class="team">시스템<b>5</b></span>
+        <span class="team">해체<b>2</b></span>
+        <span class="team">타설<b>3</b></span>
+        <span class="team hide" hidden>직원<b>6</b></span>
+        <span class="team hide" hidden>직영<b>1</b></span>
+        <button class="team-toggle" data-more="2" onclick="toggleTeams(this)">+2개 더보기</button>
+      </div></div>
+
+    <div class="card">
+      <div class="card-top">
+        <div><h2>순천자이<span class="code">S1006</span></h2></div>
+        <div class="counts">
+          <div class="total"><div class="n">11</div><div class="lab">총원</div></div>
+          <div><div class="n">1</div><div class="lab">직원</div></div>
+        </div>
+      </div>
+      <ul class="process">
+        <li>201·202동 필로티 마감미장</li>
+        <li>202·203동 마감 할석</li>
+        <li>206·207동 계단 면처리</li>
+      </ul>
+      <div class="teams">
+        <span class="team">할석미장<b>6</b></span>
+        <span class="team">견출<b>4</b></span>
+        <span class="team">직원<b>1</b></span>
+      </div></div>
+
+    <div class="card">
+      <div class="card-top">
+        <div><h2>안양자이헤리티온<span class="code">S1018</span></h2></div>
+        <div class="counts">
+          <div class="total"><div class="n">17</div><div class="lab">총원</div></div>
+          <div><div class="n">11</div><div class="lab">직원</div></div>
+        </div>
+      </div>
+      <ul class="process">
+        <li>105동 기초·108동 B5F 자재정리</li>
+        <li>105동 B5F 수직철근 반입</li>
+      </ul>
+      <div class="teams">
+        <span class="team">용역<b>4</b></span>
+        <span class="team">철근<b>2</b></span>
+        <span class="team">직원<b>11</b></span>
+      </div></div>
+
+    <div class="card">
+      <div class="card-top">
+        <div><h2>역삼자이<span class="code">S1010</span></h2></div>
+        <div class="counts">
+          <div class="total"><div class="n">201</div><div class="lab">총원</div></div>
+          <div><div class="n">8</div><div class="lab">직원</div></div>
+        </div>
+      </div>
+      <ul class="process">
+        <li class="pour">타설팀 4명 투입 (위치 미기재)</li>
+        <li>작업현황 세부내용 미기재</li>
+      </ul>
+      <div class="teams">
+        <span class="team">형틀<b>82</b></span>
+        <span class="team">철근<b>42</b></span>
+        <span class="team">정리<b>18</b></span>
+        <span class="team">해체<b>14</b></span>
+        <span class="team">시스템<b>12</b></span>
+        <span class="team">타설<b>4</b></span>
+        <span class="team hide" hidden>보통인부<b>7</b></span>
+        <span class="team hide" hidden>할석미장<b>4</b></span>
+        <span class="team hide" hidden>비계<b>4</b></span>
+        <span class="team hide" hidden>직원<b>8</b></span>
+        <span class="team hide" hidden>직영<b>6</b></span>
+        <button class="team-toggle" data-more="5" onclick="toggleTeams(this)">+5개 더보기</button>
+      </div></div>
+
+    <div class="card">
+      <div class="card-top">
+        <div><h2>철산역자이<span class="code">S1015</span></h2></div>
+        <div class="counts">
+          <div class="total"><div class="n">176</div><div class="lab">총원</div></div>
+          <div><div class="n">16</div><div class="lab">직원</div></div>
+        </div>
+      </div>
+      <ul class="process">
+        <li class="pour">102동 RAMP·301동 기둥 타설</li>
+        <li>102·110동 주차장 기둥·벽체 철근</li>
+        <li>101동 B6F 보·슬라브 거푸집</li>
+      </ul>
+      <div class="teams">
+        <span class="team">형틀<b>82</b></span>
+        <span class="team">철근<b>22</b></span>
+        <span class="team">용역<b>11</b></span>
+        <span class="team">해체정리<b>7</b></span>
+        <span class="team">시스템<b>7</b></span>
+        <span class="team">타설<b>10</b></span>
+        <span class="team hide" hidden>해체<b>6</b></span>
+        <span class="team hide" hidden>할석<b>2</b></span>
+        <span class="team hide" hidden>직원<b>16</b></span>
+        <span class="team hide" hidden>직영<b>13</b></span>
+        <button class="team-toggle" data-more="4" onclick="toggleTeams(this)">+4개 더보기</button>
+      </div></div>
+
+    <div class="card">
+      <div class="card-top">
+        <div><h2>평촌자이<span class="code">S1007</span></h2></div>
+        <div class="counts">
+          <div class="total"><div class="n">66</div><div class="lab">총원</div></div>
+          <div><div class="n">8</div><div class="lab">직원</div></div>
+        </div>
+      </div>
+      <ul class="process">
+        <li class="pour">107동 옥상 태양광패드 타설</li>
+        <li>106동 33F 알폼 설치</li>
+        <li>110동 슬라브 철근작업</li>
+      </ul>
+      <div class="teams">
+        <span class="team">알폼<b>11</b></span>
+        <span class="team">할석미장<b>10</b></span>
+        <span class="team">철근<b>9</b></span>
+        <span class="team">용역<b>6</b></span>
+        <span class="team">견출<b>5</b></span>
+        <span class="team">타설<b>3</b></span>
+        <span class="team hide" hidden>형틀<b>5</b></span>
+        <span class="team hide" hidden>세대청소<b>4</b></span>
+        <span class="team hide" hidden>직원<b>8</b></span>
+        <span class="team hide" hidden>직영<b>5</b></span>
+        <button class="team-toggle" data-more="4" onclick="toggleTeams(this)">+4개 더보기</button>
+      </div></div>
+
+  </div>
+
+  <footer>
+    <span>ERP(ilenc.dcerp.kr) 일일출역 게시글 자동 수집 · Claude 요약</span>
+    <span>수집시각 2026-10-16 08:50 · 원문은 각 현장 ERP 게시글 참고</span>
+  </footer>
+
+</div>
+
+<script>
+function toggleTeams(btn){
+  var teams = btn.parentElement;
+  var hiddenChips = teams.querySelectorAll('.team.hide[hidden]');
+  if (hiddenChips.length){
+    hiddenChips.forEach(function(el){ el.hidden = false; });
+    btn.textContent = '접기';
+  } else {
+    teams.querySelectorAll('.team.hide').forEach(function(el){ el.hidden = true; });
+    btn.textContent = '+' + btn.dataset.more + '개 더보기';
+  }
+}
+</script>
+
+</body>
+</html>
